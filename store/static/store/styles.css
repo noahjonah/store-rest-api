@@ -1,0 +1,8 @@
+/* Defining css classes for the store app */
+
+/* Image classes */
+.thumbnail{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}

@@ -20,6 +20,22 @@ class InventoryFilter(admin.SimpleListFilter):
             return queryset.filter(inventory__lt=10)
 
 
+# An admin include and look for images in our product
+class ProductImageInline(admin.TabularInline):
+    model = models.ProductImage
+    readonly_fields = ['thumbnail']
+    
+    # SInce thumbnail is not in our model fields we have to define here how to get it
+    def thumbnail(self, instance):
+        # If we have an image
+        if instance.image.name != "":
+            # returning an actual formated image, resized by a css class in /static dir
+            return format_html(
+                f'<img src="{instance.image.url}" class="thumbnail" alt="Product image."/>'
+                )
+        return ''
+    
+
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
     autocomplete_fields = ['collection']
@@ -34,6 +50,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_per_page = 10
     list_select_related = ['collection']
     search_fields = ['title']
+    inlines = [ProductImageInline] # For product image
 
     def collection_title(self, product):
         return product.collection.title
@@ -53,6 +70,14 @@ class ProductAdmin(admin.ModelAdmin):
             messages.ERROR
         )
 
+    # A media class to specify the static files to be imported for our product admin
+    class Media:
+        css = {
+            # All represent to media type all, other media type to apply styles are
+            # print, screen, all -> styles will be applied to every media
+            'all': ['store/styles.css']
+        }
+        
 
 @admin.register(models.Collection)
 class CollectionAdmin(admin.ModelAdmin):
