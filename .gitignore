@@ -60,6 +60,9 @@ cover/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+#? Removing static and media fro githu repo, too many meaningless files over 200
+/media/
+/static/
 
 # Flask stuff:
 instance/

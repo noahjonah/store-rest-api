@@ -156,6 +156,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+# A path for collecting all static files during production
+# Everytime we want to deploy we collect static
+#! python manage.py collectstatic 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 
 #? Users uploaded files media settings
 MEDIA_URL = '/media/'
