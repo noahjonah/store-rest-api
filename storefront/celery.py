@@ -3,7 +3,7 @@ from celery import Celery
 
 
 # Setting an env variable to storefront settings
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'storefront.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'storefront.settings.dev')
 
 # Celery instance
 celery = Celery('storefront')
