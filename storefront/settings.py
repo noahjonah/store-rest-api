@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware', # this toolbar affects performance, removed during performance tests
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # for serving static files in production, just after security middleware
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -233,6 +234,37 @@ CACHES = {
         "TIMEOUT": 5 * 60, # Global cache expiration time, 5 minutes
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+
+# Logging Configuration
+# There are various ways and options here in the log configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False, # Other loggers that come with python libs
+    # How to handle logg messages -> write them to a file, display them in the console 
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandle'
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': 'general.log'
+        }
+    },
+    # Where the logs should be captured -> empty string means all places
+    'loggers': {
+        '': {'handlers': ['file', 'console']},
+        # Levels of Severity => Debug > Info > Warning > Error > Critical
+        'level': os.environ.get('DJANGO_LOG_LEVEL', 'INFO')
+    }, 
+    'formatters': {
+        'verbose': {
+            # day - levelname(info) - where(module) - log msg
+            'format': '{asctime} ({levelname}) - {name} - {message}',
+            'style': '{' # str.format()
         }
     }
 }
