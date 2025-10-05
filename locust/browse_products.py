@@ -49,3 +49,9 @@ class WebsiteUser(HttpUser):
                 'product_id': product_id, 'quantity': 1
             }
         )
+        
+    # A task for getting our slow endpoint api from httpbin
+    @task(1)
+    def say_hello(self):
+        self.client.get('/playground/hello/')
+        

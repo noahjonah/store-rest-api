@@ -218,3 +218,15 @@ CELERY_BEAT_SCHEDULE = {
         'args': ['Hello celery beat']
     }
 }
+
+
+# Redis Cache settings
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/2", #! 2 -> name of the db, 1 was used by celery broker
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
