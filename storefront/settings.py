@@ -225,6 +225,7 @@ CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/2", #! 2 -> name of the db, 1 was used by celery broker
+        "TIMEOUT": 5 * 60, # Global cache expiration time, 5 minutes
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
