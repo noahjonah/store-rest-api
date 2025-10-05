@@ -23,7 +23,8 @@ from .serializers import AddCartItemSerializer, CartItemSerializer, CartSerializ
             
 
 class ProductViewSet(ModelViewSet):
-    queryset = Product.objects.prefetch_related('images').all()
+    # Testing the effect of removing a prefetch of image together with products in Performance 
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_class = ProductFilter
