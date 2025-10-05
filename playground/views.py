@@ -3,7 +3,7 @@ from django.core.cache import cache
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 from rest_framework.views import APIView
-import requests
+import requests, logging
 
 
 """
@@ -35,12 +35,20 @@ def say_hello(request):
 """
 
 
+# logging
+logger = logging.getLogger(__name__)
+
 #? Class based view with Caching
 class HellowView(APIView):
     # For class based views we use method_decorator to apply CACHE decorators to class methods
     @method_decorator(cache_page(5 * 60))
     def get(self, request):
-        response = requests.get('https://httpbin.org/delay/5')
-        data = response.json()
-        return render(request, 'hello.html', {'name': data})
+        try:
+            logger.info('Calling httpbin')
+            response = requests.get('https://httpbin.org/delay/5')
+            logger.info('Received the httpbin')
+            data = response.json()
+        except requests.ConnectionError:
+            logger.critical('Your Offline, Cant reach httpbin')
+        return render(request, 'hello.html', {'name': 'Noah Jonah'})
         

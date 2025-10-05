@@ -247,18 +247,21 @@ LOGGING = {
     # How to handle logg messages -> write them to a file, display them in the console 
     'handlers': {
         'console': {
-            'class': 'logging.StreamHandle'
+            'class': 'logging.StreamHandler'
         },
         'file': {
             'class': 'logging.FileHandler',
-            'filename': 'general.log'
+            'filename': 'general.log',
+            'formatter': 'verbose'
         }
     },
     # Where the logs should be captured -> empty string means all places
     'loggers': {
-        '': {'handlers': ['file', 'console']},
-        # Levels of Severity => Debug > Info > Warning > Error > Critical
-        'level': os.environ.get('DJANGO_LOG_LEVEL', 'INFO')
+        '': {
+            'handlers': ['console', 'file'],
+            # Levels of Severity => Debug > Info > Warning > Error > Critical
+            'level': os.environ.get('DJANGO_LOG_LEVEL', 'INFO')
+        }
     }, 
     'formatters': {
         'verbose': {
