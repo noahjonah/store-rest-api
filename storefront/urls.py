@@ -33,5 +33,8 @@ urlpatterns = [
 
 # Appending a url pointing to media settings for files => for production
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)    
+    
+    # Silk is also paced in dev place because it adds overheads to the server in production
+    urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]
     

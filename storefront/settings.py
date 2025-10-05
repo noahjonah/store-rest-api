@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'djoser',
+    'silk',
     'playground',
     'debug_toolbar',
     'store',
@@ -52,17 +53,23 @@ INSTALLED_APPS = [
     'core',
 ]
 
+#! why placement of middlewares matter?
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware', # this toolbar affects performance, removed during performance tests
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware', 
 ]
+
+# Silk is also paced in dev place because it adds overheads to the server in production
+# if DEBUG:
+#     MIDDLEWARE += ['silk.middleware.SilkyMiddleware']
+     
 
 # Cross-origin resource sharing (CORS) settings
 # External domain names that can make cross-site HTTP requests to this server
