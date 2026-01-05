@@ -20,6 +20,8 @@ celery = "*"
 flower = "*"
 whitenoise = "*"
 gunicorn = "*"
+django-silk = "*"
+django-redis = "*"
 
 [dev-packages]
 pytest = "*"
